@@ -28,8 +28,8 @@ const Checkout = (props) => {
 
         const enteredNameIsValid = !isEmpty(enteredName);
         const enteredStreetIsValid = !isEmpty(enteredStreet);
-        const enteredPostalIsValid = !isEmpty(enteredPostal);
-        const enteredCityIsValid = !isNotFiveChars(enteredCity);
+        const enteredPostalIsValid = !isNotFiveChars(enteredPostal);
+        const enteredCityIsValid = !isEmpty(enteredCity);
 
         setFormValidity({
             name: enteredNameIsValid,
@@ -42,12 +42,20 @@ const Checkout = (props) => {
             enteredNameIsValid &&
             enteredStreetIsValid &&
             enteredPostalIsValid &&
-            enteredPostalIsValid;
+            enteredCityIsValid;
 
         if (formIsValid){
             //sumbit the cart data
             return;
         }
+        props.oncConfirm(
+            {
+                name: enteredName,
+                street: enteredStreet,
+                postalLCode: enteredPostal,
+                city: enteredCity,
+            }
+        );
 
 
     };
@@ -79,7 +87,7 @@ const Checkout = (props) => {
             <div className={cityControlClasses}>
                 <label htmlFor='city'>City</label>
                 <input type='text' id='city' ref={cityInputRef} />
-                {!formInputsValidity.city && <p>Please enter a valid name!</p>}
+                {!formInputsValidity.city && <p>Please enter a valid city!</p>}
 
             </div>
             <div className={classes.actions}>
